@@ -14,7 +14,8 @@
 # Default values
 DEFAULT_DATADIR="/home/ubuntu/data"
 # DEFAULT_TARGET_NUMBER=10000000
-DEFAULT_TARGET_NUMBER=5000000
+#DEFAULT_TARGET_NUMBER=5000000
+DEFAULT_TARGET_NUMBER=500000
 
 
 #############################################################
