@@ -10,12 +10,14 @@
 #######################################################################################
 
 # Default values
+mkdir data
 DEFAULT_DATADIR="/home/ubuntu/data"
-#10_000_000
+# 1000w
 #DEFAULT_TARGET_BLOCK_HASH="0xaa20f7bde5be60603f11a45fc4923aab7552be775403fc00c2e6b805e6297dbe"
-
-#5_000_000
-DEFAULT_TARGET_BLOCK_HASH="0x7d5a4369273c723454ac137f48a4f142b097aa2779464e6505f1b1c5e37b5382"
+# 50w
+#DEFAULT_TARGET_BLOCK_HASH="0x7d5a4369273c723454ac137f48a4f142b097aa2779464e6505f1b1c5e37b5382"
+# 1800w
+DEFAULT_TARGET_BLOCK_HASH="0x95b198e154acbfc64109dfd22d8224fe927fd8dfdedfae01587674482ba4baf3"
 
 
 # Parse command-line arguments
