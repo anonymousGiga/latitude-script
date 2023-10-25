@@ -1,0 +1,2 @@
+# latitude-script
+test
