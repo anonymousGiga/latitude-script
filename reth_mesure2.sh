@@ -63,75 +63,75 @@ fi
 echo "Data directory is: $DATADIR"
 echo "Target block number is: $TARGET_NUMBER"
 
-#############################################################
+##############################################################
+##
+##  1. Run with feature enable_execution_duration_record
+##
+##############################################################
+## Build with enable_execution_duration_record 
+#pushd reth && \
+#RUSTFLAGS="-C target-cpu=native" cargo build --profile maxperf --features=finish_after_execution_stage,enable_execution_duration_record && \
+#CARGO_BIN="$HOME/.cargo/bin/" && \
+#cp ./target/maxperf/reth $CARGO_BIN && \
+#popd && \
+#echo "Install reth finish!" && \
+#reth --version && \
 #
-#  1. Run with feature enable_execution_duration_record
 #
-#############################################################
-# Build with enable_execution_duration_record 
-pushd reth && \
-RUSTFLAGS="-C target-cpu=native" cargo build --profile maxperf --features=finish_after_execution_stage,enable_execution_duration_record && \
-CARGO_BIN="$HOME/.cargo/bin/" && \
-cp ./target/maxperf/reth $CARGO_BIN && \
-popd && \
-echo "Install reth finish!" && \
-reth --version && \
-
-
-# Clear data
-RUST_LOG=info reth stage drop execution --datadir $DATADIR  && \
-RUST_LOG=info reth stage drop account-hashing --datadir $DATADIR  && \
-RUST_LOG=info reth stage drop storage-hashing --datadir $DATADIR  && \
-RUST_LOG=info reth stage drop merkle --datadir $DATADIR && \
-RUST_LOG=info reth stage drop tx-lookup --datadir $DATADIR && \
-RUST_LOG=info reth stage drop account-history --datadir $DATADIR && \
-RUST_LOG=info reth stage drop storage-history --datadir $DATADIR && \
-vmtouch -e $DATADIR && \
-
-# Run reth with default Th.
-RUST_LOG=info reth node --debug.max-block $TARGET_NUMBER --datadir $DATADIR --debug.terminate -d > default_execution_duration_record && \
-
-
-# Clear data
-RUST_LOG=info reth stage drop execution --datadir $DATADIR  && \
-RUST_LOG=info reth stage drop account-hashing --datadir $DATADIR  && \
-RUST_LOG=info reth stage drop storage-hashing --datadir $DATADIR  && \
-RUST_LOG=info reth stage drop merkle --datadir $DATADIR && \
-RUST_LOG=info reth stage drop tx-lookup --datadir $DATADIR && \
-RUST_LOG=info reth stage drop account-history --datadir $DATADIR && \
-RUST_LOG=info reth stage drop storage-history --datadir $DATADIR && \
-vmtouch -e $DATADIR && \
-
-## Run reth with unlimit Th.
-RUST_LOG=info reth node --debug.max-block $TARGET_NUMBER --datadir $DATADIR --config ./max.toml --debug.terminate -d > unlimit_execution_duration_record && \
-
-
-#############################################################
+## Clear data
+#RUST_LOG=info reth stage drop execution --datadir $DATADIR  && \
+#RUST_LOG=info reth stage drop account-hashing --datadir $DATADIR  && \
+#RUST_LOG=info reth stage drop storage-hashing --datadir $DATADIR  && \
+#RUST_LOG=info reth stage drop merkle --datadir $DATADIR && \
+#RUST_LOG=info reth stage drop tx-lookup --datadir $DATADIR && \
+#RUST_LOG=info reth stage drop account-history --datadir $DATADIR && \
+#RUST_LOG=info reth stage drop storage-history --datadir $DATADIR && \
+#vmtouch -e $DATADIR && \
 #
-#  2. Run with feature enable_opcode_metrics
+## Run reth with default Th.
+#RUST_LOG=info reth node --debug.max-block $TARGET_NUMBER --datadir $DATADIR --debug.terminate -d > default_execution_duration_record && \
 #
-#############################################################
-# Build with enable_opcode_metrics
-pushd reth && \
-RUSTFLAGS="-C target-cpu=native" cargo build --profile maxperf --features=finish_after_execution_stage,enable_opcode_metrics && \
-CARGO_BIN="$HOME/.cargo/bin/" && \
-cp ./target/maxperf/reth $CARGO_BIN && \
-popd && \
-echo "Install reth finish!" && \
-reth --version && \
-
-# Clear data
-RUST_LOG=info reth stage drop execution --datadir $DATADIR  && \
-RUST_LOG=info reth stage drop account-hashing --datadir $DATADIR  && \
-RUST_LOG=info reth stage drop storage-hashing --datadir $DATADIR  && \
-RUST_LOG=info reth stage drop merkle --datadir $DATADIR && \
-RUST_LOG=info reth stage drop tx-lookup --datadir $DATADIR && \
-RUST_LOG=info reth stage drop account-history --datadir $DATADIR && \
-RUST_LOG=info reth stage drop storage-history --datadir $DATADIR && \
-vmtouch -e $DATADIR && \
-
-# Run reth with default Th.
-RUST_LOG=info reth node --debug.max-block $TARGET_NUMBER --datadir $DATADIR --debug.terminate -d > default_opcode_record && \
+#
+## Clear data
+#RUST_LOG=info reth stage drop execution --datadir $DATADIR  && \
+#RUST_LOG=info reth stage drop account-hashing --datadir $DATADIR  && \
+#RUST_LOG=info reth stage drop storage-hashing --datadir $DATADIR  && \
+#RUST_LOG=info reth stage drop merkle --datadir $DATADIR && \
+#RUST_LOG=info reth stage drop tx-lookup --datadir $DATADIR && \
+#RUST_LOG=info reth stage drop account-history --datadir $DATADIR && \
+#RUST_LOG=info reth stage drop storage-history --datadir $DATADIR && \
+#vmtouch -e $DATADIR && \
+#
+### Run reth with unlimit Th.
+#RUST_LOG=info reth node --debug.max-block $TARGET_NUMBER --datadir $DATADIR --config ./max.toml --debug.terminate -d > unlimit_execution_duration_record && \
+#
+#
+##############################################################
+##
+##  2. Run with feature enable_opcode_metrics
+##
+##############################################################
+## Build with enable_opcode_metrics
+#pushd reth && \
+#RUSTFLAGS="-C target-cpu=native" cargo build --profile maxperf --features=finish_after_execution_stage,enable_opcode_metrics && \
+#CARGO_BIN="$HOME/.cargo/bin/" && \
+#cp ./target/maxperf/reth $CARGO_BIN && \
+#popd && \
+#echo "Install reth finish!" && \
+#reth --version && \
+#
+## Clear data
+#RUST_LOG=info reth stage drop execution --datadir $DATADIR  && \
+#RUST_LOG=info reth stage drop account-hashing --datadir $DATADIR  && \
+#RUST_LOG=info reth stage drop storage-hashing --datadir $DATADIR  && \
+#RUST_LOG=info reth stage drop merkle --datadir $DATADIR && \
+#RUST_LOG=info reth stage drop tx-lookup --datadir $DATADIR && \
+#RUST_LOG=info reth stage drop account-history --datadir $DATADIR && \
+#RUST_LOG=info reth stage drop storage-history --datadir $DATADIR && \
+#vmtouch -e $DATADIR && \
+#
+## Run reth with default Th.
+#RUST_LOG=info reth node --debug.max-block $TARGET_NUMBER --datadir $DATADIR --debug.terminate -d > default_opcode_record && \
 
 
 #############################################################
