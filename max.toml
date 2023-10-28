@@ -20,7 +20,7 @@ commit_threshold = 5000000
 
 [stages.execution]
 max_blocks = 7500000
-max_changes = 1250202598 
+max_changes = 1000000000 
 
 [stages.account_hashing]
 clean_threshold = 500000
