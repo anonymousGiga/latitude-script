@@ -131,7 +131,7 @@ RUST_LOG=info reth stage drop storage-history --datadir $DATADIR && \
 vmtouch -e $DATADIR && \
 
 # Run reth with default Th.
-RUST_LOG=info reth node --debug.max-block $TARGET_NUMBER --datadir $DATADIR --debug.terminate -d > default_opcode_record &&
+RUST_LOG=info reth node --debug.max-block $TARGET_NUMBER --datadir $DATADIR --debug.terminate -d > default_opcode_record
 
 
 ##############################################################
