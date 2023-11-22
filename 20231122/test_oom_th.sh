@@ -62,7 +62,7 @@ echo "Target block number is: $TARGET_NUMBER"
 #############################################################
 # Build with enable_test_max_th 
 pushd reth && \
-RUSTFLAGS="-C target-cpu=native" cargo build --profile maxperf --features=finish_after_execution_stage,enable_test_max_th && \
+RUSTFLAGS="-C target-cpu=native" cargo build --profile maxperf --features=finish_after_execution_stage,enable_test_max_th,enable_cache_record && \
 CARGO_BIN="$HOME/.cargo/bin/" && \
 cp ./target/maxperf/reth $CARGO_BIN && \
 popd && \

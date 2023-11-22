@@ -95,7 +95,6 @@ echo "Clone FlameGraph finish!" && \
 
 # Build Reth with maximum performance
 git clone -b andy/debug/performance-dashboard https://github.com/megaeth-labs/reth.git && \
-#git clone -b andy/test/latitude-test1 https://github.com/megaeth-labs/reth.git && \
 pushd reth && \
 RUSTFLAGS="-C target-cpu=native" cargo build --profile maxperf --features=finish_after_execution_stage && \
 CARGO_BIN="$HOME/.cargo/bin/" && \
