@@ -67,7 +67,7 @@ CARGO_BIN="$HOME/.cargo/bin/" && \
 cp ./target/maxperf/reth $CARGO_BIN && \
 popd && \
 echo "Install reth finish!" && \
-
+reth --version && \
 
 # Clear data
 RUST_LOG=info reth stage drop execution --datadir $DATADIR  && \
