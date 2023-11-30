@@ -7,3 +7,4 @@ edition = "2021"
 
 [dependencies]
 revm-utils = { git = "https://github.com/megaeth-labs/revm", branch = "andy/debug/performance-dashboard"}
+minstant = "0.1.3"
