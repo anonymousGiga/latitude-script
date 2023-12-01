@@ -84,5 +84,5 @@ reth --version && \
 
 vmtouch -e $DATADIR && \
 
-RUST_LOG=info reth stage run execution --from $MIDDLE_NUMBER --to $TARGET_NUMBER --datadir $DATADIR -c > op.log
+RUST_LOG=info reth stage run execution --from $MIDDLE_NUMBER --to $TARGET_NUMBER --datadir $DATADIR  > op.log
 
