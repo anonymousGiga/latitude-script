@@ -3,7 +3,7 @@
 #############################################################
 #
 # This script performs three experiments as follows: 
-#     1. Collecting data with "features=enable_execution_duration_record,enable_tps_gas_record,enable_cache_record,enable_execute_measure max Th".
+#     1. Collecting data with "features=enable_opcode_metrics ".
 #
 #############################################################
 
@@ -74,7 +74,7 @@ echo "Middle block number is: $MIDDLE_NUMBER"
 #
 #############################################################
 pushd reth && \
-RUSTFLAGS="-C target-cpu=native" cargo build --profile maxperf --features=finish_after_execution_stage,enable_execution_duration_record,enable_tps_gas_record,enable_cache_record,enable_execute_measure && \
+RUSTFLAGS="-C target-cpu=native" cargo build --profile maxperf --features=finish_after_execution_stage,enable_opcode_metrics && \
 CARGO_BIN="$HOME/.cargo/bin/" && \
 cp ./target/maxperf/reth $CARGO_BIN && \
 popd && \
@@ -84,5 +84,5 @@ reth --version && \
 
 vmtouch -e $DATADIR && \
 
-RUST_LOG=info reth stage run execution --from $MIDDLE_NUMBER --to $TARGET_NUMBER --datadir $DATADIR -c > all.log
+RUST_LOG=info reth stage run execution --from $MIDDLE_NUMBER --to $TARGET_NUMBER --datadir $DATADIR -c > op.log
 
