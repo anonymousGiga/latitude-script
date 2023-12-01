@@ -10,12 +10,13 @@
 # Default values
 DEFAULT_DATADIR="/home/ubuntu/data"
 DEFAULT_TARGET_NUMBER=18000000
+DEFAULT_MIDDLE_NUMBER=17000000
 
-#############################################################
-#
-#  get args
-#
-#############################################################
+##############################################################
+##
+##  get args
+##
+##############################################################
 
 # Parse command-line arguments
 while [[ $# -gt 0 ]]; do
@@ -29,6 +30,11 @@ while [[ $# -gt 0 ]]; do
         ;;
         -target_number)
         TARGET_NUMBER="$2"
+        shift
+        shift
+        ;;
+        -middle_number)
+        MIDDLE_NUMBER="$2"
         shift
         shift
         ;;
@@ -48,14 +54,19 @@ if [ -z "$TARGET_NUMBER" ]; then
     TARGET_NUMBER="$DEFAULT_TARGET_NUMBER"
 fi
 
+if [ -z "$MIDDLE_NUMBER" ]; then
+    MIDDLE_NUMBER="$DEFAULT_MIDDLE_NUMBER"
+fi
+
 # Check if the parameters are empty
-if [ -z "$DATADIR" ] || [ -z "$TARGET_NUMBER" ]; then
-    echo "USAGE: ./revm_measure1.sh -datadir DATADIR -target_number TARGET_NUMBER"
+if [ -z "$DATADIR" ] || [ -z "$TARGET_NUMBER" ] || [ -z "$MIDDLE_NUMBER" ]; then
+    echo "USAGE: ./perf_record.sh -datadir DATADIR -target_number TARGET_NUMBER -middle_number MIDDLE_NUMBER"
     exit 1
 fi
 
 echo "Data directory is: $DATADIR"
 echo "Target block number is: $TARGET_NUMBER"
+echo "Middle block number is: $MIDDLE_NUMBER"
 
 #############################################################
 #
@@ -71,16 +82,7 @@ echo "Install reth finish!" && \
 reth --version && \
 
 
-# Clear data
-RUST_LOG=info reth stage drop execution --datadir $DATADIR  && \
-RUST_LOG=info reth stage drop account-hashing --datadir $DATADIR  && \
-RUST_LOG=info reth stage drop storage-hashing --datadir $DATADIR  && \
-RUST_LOG=info reth stage drop merkle --datadir $DATADIR && \
-RUST_LOG=info reth stage drop tx-lookup --datadir $DATADIR && \
-RUST_LOG=info reth stage drop account-history --datadir $DATADIR && \
-RUST_LOG=info reth stage drop storage-history --datadir $DATADIR && \
 vmtouch -e $DATADIR && \
 
-# Run reth with max Th.
-RUST_LOG=info reth node --debug.max-block $TARGET_NUMBER --datadir $DATADIR --config ./max.toml --debug.terminate -d > all.log
+RUST_LOG=WARN reth stage run execution --from $MIDDLE_NUMBER --to $TARGET_NUMBER --datadir $DATADIR -c > all.log
 
