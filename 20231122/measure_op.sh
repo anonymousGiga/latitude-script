@@ -70,7 +70,7 @@ echo "Middle block number is: $MIDDLE_NUMBER"
 
 #############################################################
 #
-#  1. Run with features: enable_execution_duration_record,enable_tps_gas_record,enable_cache_record, max Th".
+#  1. Run with features: enable_opcode_metrics.
 #
 #############################################################
 pushd reth && \
