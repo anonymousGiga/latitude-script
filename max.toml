@@ -19,8 +19,9 @@ downloader_max_concurrent_requests = 100
 commit_threshold = 5000000
 
 [stages.execution]
-max_blocks = 6000000
-max_changes = 1000000000 
+max_blocks = 500000
+max_changes = 9223372036854775807
+max_cumulative_gas = 9223372036854775807
 
 [stages.account_hashing]
 clean_threshold = 500000
