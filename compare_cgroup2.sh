@@ -7,11 +7,10 @@ CGROUP_DIR1="/sys/fs/cgroup/unified"
 CGROUP_DIR2="/sys/fs/cgroup/unified/my_memory_limit"
 MEMORY_LIMIT="16G"
 SWAP_MEMORY_LIMIT="128G"
-#SWAPNESS="10"
-SWAPNESS="60"
-
+SWAPNESS="10"
+#SWAPNESS="60"
+BAK_DATA="/nvme2/17-bak/db_16999999"
 DATADIR="/nvme2/reth_data"
-#DATADIR="/home/andy/.local/share/reth/mainnet"
 TARGET_NUMBER=18000000 
 
 ##########################################################################
@@ -43,10 +42,6 @@ fi
 sudo sh -c "echo $SWAP_MEMORY_LIMIT > $CGROUP_DIR2/memory.swap.max"
 sudo sh -c "echo $MEMORY_LIMIT > $CGROUP_DIR2/memory.high"
 
-
-##########################################################################
-# Experiment 1
-##########################################################################
 # Compile Reth
 pushd reth && \
 RUSTFLAGS="-C target-cpu=native" cargo build --profile maxperf --features=enable_cache_record,enable_execution_duration_record,finish_after_execution_stage,enable_tps_gas_record,enable_db_speed_record,enable_execute_measure,enable_write_to_db_measure && \
@@ -54,12 +49,18 @@ CARGO_BIN="$HOME/.cargo/bin/" && \
 cp ./target/maxperf/reth $CARGO_BIN && \
 popd && \
 echo "Install reth finish!" && \
+
+##########################################################################
+# Experiment 1
+##########################################################################
+sudo cp $BAK_DATA $DATA_DATA  -r && \
+sudo sudo chmod 777 -R $DATA_DATA && \
 reth --version && \
 
 vmtouch -e $DATADIR && \
 
 # Start the reth process and get its ID
-RUST_LOG=info reth node --debug.max-block $TARGET_NUMBER --datadir $DATADIR --config ./max.toml --debug.terminate -d > all_log &
+RUST_LOG=info reth node --debug.max-block $TARGET_NUMBER --datadir $DATADIR --config ./max.toml --debug.terminate -d > all_log1 &
 RETH_PID=$! 
 
 # Add the reth PID to the cgroup
@@ -73,21 +74,17 @@ sudo sh -c "echo $RETH_PID > $RETH_PROCESS_DIR/cgroup.procs"
 wait $RETH_PID
 
 ##########################################################################
-# Experiment 2: opcode
+# Experiment 2 
 ##########################################################################
-# Compile Reth
-pushd reth && \
-RUSTFLAGS="-C target-cpu=native" cargo build --profile maxperf --features=finish_after_execution_stage,enable_opcode_metrics && \
-CARGO_BIN="$HOME/.cargo/bin/" && \
-cp ./target/maxperf/reth $CARGO_BIN && \
-popd && \
-echo "Install reth finish!" && \
+rm $DATA_DATA -rf && \
+sudo cp $BAK_DATA $DATA_DATA  -r && \
+sudo sudo chmod 777 -R $DATA_DATA && \
 reth --version && \
 
 vmtouch -e $DATADIR && \
 
 # Start the reth process and get its ID
-RUST_LOG=info reth node --debug.max-block $TARGET_NUMBER --datadir $DATADIR --config ./max.toml --debug.terminate -d > opcode_record.log &
+RUST_LOG=info reth node --debug.max-block $TARGET_NUMBER --datadir $DATADIR --config ./min.toml --debug.terminate -d > all_log2 &
 RETH_PID=$!
 
 # Add the reth PID to the cgroup
