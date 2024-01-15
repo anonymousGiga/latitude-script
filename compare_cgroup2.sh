@@ -53,8 +53,8 @@ echo "Install reth finish!" && \
 ##########################################################################
 # Experiment 1
 ##########################################################################
-sudo cp $BAK_DATA $DATA_DATA  -r && \
-sudo sudo chmod 777 -R $DATA_DATA && \
+sudo cp $BAK_DATA $DATADIR  -r && \
+sudo sudo chmod 777 -R $DATADIR
 reth --version && \
 
 vmtouch -e $DATADIR && \
@@ -76,9 +76,9 @@ wait $RETH_PID
 ##########################################################################
 # Experiment 2 
 ##########################################################################
-rm $DATA_DATA -rf && \
-sudo cp $BAK_DATA $DATA_DATA  -r && \
-sudo sudo chmod 777 -R $DATA_DATA && \
+rm $DATADIR -rf && \
+sudo cp $BAK_DATA $DATADIR  -r && \
+sudo sudo chmod 777 -R $DATADIR && \
 reth --version && \
 
 vmtouch -e $DATADIR && \
